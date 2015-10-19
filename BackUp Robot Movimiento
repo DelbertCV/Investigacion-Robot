@@ -1,0 +1,43 @@
+/*
+  Test Ping.c
+
+  Test the PING))) sensor before using it to navigate with the ActivityBot.
+
+  http://learn.parallax.com/activitybot/build-and-test-ping-sensor-circuit
+*/
+
+#include "simpletools.h"                      // Include simpletools header
+#include "ping.h"  
+#include "abdrive.h" 
+#include "abcalibrate.h"                         // Include ping header
+
+int distance;                                 // Declare distance variable
+int distanceT;
+
+
+int main()                                    // main function
+{
+  
+  drive_speed(31,31);
+  
+  while(1)                                    // Repeat indefinitely
+  {
+    
+    pause(500);
+    distance = ping_cm(8); 
+    distanceT = distance ;                  // Get cm distance from Ping)))
+    
+    if (distanceT <= 10){
+        drive_goto(26,-27);
+        pause(500);
+      }
+     else{
+        drive_goto(15,15);
+        pause(75);
+       }
+    
+    //print("%c distance = %d%c cm",            // Display distance
+      //     HOME, distance, CLREOL); 
+                                     // Wait 1/5 second
+  }
+}
