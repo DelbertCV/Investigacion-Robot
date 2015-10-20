@@ -1,0 +1,99 @@
+/*
+  Test Ping.c
+
+  Test the PING))) sensor before using it to navigate with the ActivityBot.
+
+  http://learn.parallax.com/activitybot/build-and-test-ping-sensor-circuit
+*/
+
+#include "simpletools.h"                      // Include simpletools header
+#include "ping.h"  
+#include "abdrive.h" 
+#include "abcalibrate.h"                         // Include ping header
+
+int distance;                                 // Declare distance variable
+int distanceT;
+
+struct stack{
+    int stk[1000];
+    int top;
+  };
+
+
+typedef struct stack ST;
+ST s;
+
+void push(int);
+int  pop(void);
+
+
+int distance;                                 // Declare distance variable
+int distanceT;
+int i;
+
+
+int main()
+{
+  s.top = 0;
+  i=0;
+  pause(500);
+  
+  while (1){
+      
+      girar2();
+      i = resolver(); 
+     
+    }  
+}
+
+
+int resolver(){
+  int b;
+  
+  distance = ping_cm(8);
+  
+  
+  if (distance<15){
+    girar();
+    b = resolver();
+    
+    if (b!=1){
+        girar();
+        b = resolver();
+      }
+  }
+  else{
+      drive_goto(48,46);
+      return 1;
+    }
+
+  return 0;
+  
+}
+
+
+void girar(){
+    
+    drive_goto(26,-28);
+    pause(500);
+  
+  }
+  
+void girar2(){
+    
+    drive_goto(-26,28);
+    pause(500);
+  
+  }
+
+void push(int a){
+    s.top = s.top+1;
+    s.stk[s.top]= a;
+  }
+  
+int pop(){
+    int a = s.stk[s.top];
+    s.top = s.top - 1;
+    return(a);
+  }
+
