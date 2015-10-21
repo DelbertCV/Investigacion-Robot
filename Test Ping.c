@@ -43,6 +43,7 @@ int main()
  
       
       /*Se revisan todas las posibilidades*/
+	  /*Se lee mediante el puerto 8*/
       adelante = ping_cm(8);
       girarD();
       derecha = ping_cm(8);
