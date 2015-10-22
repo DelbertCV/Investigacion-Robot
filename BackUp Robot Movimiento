@@ -20,7 +20,7 @@ typedef struct stack ST;
 ST s;
 
 void push(int);
-void pop(void);
+int pop(void);
 
 int i;
 
@@ -33,15 +33,16 @@ int main()
   int derecha;
   int izquierda;
   int atras;
-  
+  int actual;
+  int bandera;
+  bandera   = 0;
+  actual    = 0;
   adelante  = 0;
   derecha   = 0;
   izquierda = 0;
   atras     = 0;
-
+  
   while (1){
- 
-      
       /*Se revisan todas las posibilidades*/
       adelante = ping_cm(8);
       girarD();
@@ -51,47 +52,48 @@ int main()
       girarD();
       izquierda = ping_cm(8);
       girarD();
-      
-      
-      /*Jerarquia: derecha, adelante, izquierda, atras*/
-      
-      if (derecha>=15){
+      /* Jerarquia: derecha, adelante, izquierda, atras */
+     
+      bandera = 0;
+        if (izquierda>=15){
+          push(2);
+          bandera = 1;
+        }
+        
+        if (adelante>=15){
+          push(1);
+          bandera = 1;
+        }
+        
+        if (derecha>=15){
           push(3);
+          bandera = 1;
         }
-      else
-          if (adelante>=15){
-            push(1);
+        
+        if (bandera!=1){
+            push(4);
           }
-          else
-            if (izquierda>=15){
-              push(2);
-            }
-            else
-              if (atras>=15){
-                push(4);
-              }
- 
-      if (s.stk[s.top] == 1){
-          drive_goto(48,46);
-          pop();
-        }
-      if (s.stk[s.top] == 2){
-          girarI();
-          drive_goto(48,46);
-          pop();
-        }
-      if (s.stk[s.top] == 3){
-          girarD();
-          drive_goto(48,46);
-          pop();
-        }
-      if (s.stk[s.top] == 4){
-          girarI();
-          girarI();
-          drive_goto(48,46);
-          pop();
-        }
-    }  
+
+        actual = pop();
+        
+        if (actual == 3){
+            girarD();
+            drive_goto(48,46);
+          }
+        if (actual == 1){
+            drive_goto(48,46);
+          }
+        if (actual == 2){
+            girarI();
+            drive_goto(48,46);
+          }
+          
+        if (actual == 4){
+            girarI();
+            girarI();
+            drive_goto(48,46);
+          }     
+   }        
 }
 
 void girarD(){
@@ -109,8 +111,11 @@ void push(int a){
     s.stk[s.top]= a;
   }
   
-void pop(){
+int pop(){
     int a = s.stk[s.top];
     s.top = s.top - 1;
+    return a;
   }
+  
+  
 
