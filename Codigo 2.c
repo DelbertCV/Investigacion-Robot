@@ -82,17 +82,17 @@ int main()
         derecha  = (derecha *10)/3.25;
         izquierda= (izquierda*10)/3.25;
         actual = pop();
-        
+		
         if (actual == 3){
             girarD();
-            drive_goto(46,46);
+            drive_goto(derecha - 25,derecha - 24);
           }
         if (actual == 1){
-            drive_goto(46,46);
+            drive_goto(adelante - 25,adelante - 24);
           }
         if (actual == 2){
             girarI();
-            drive_goto(46,46);
+            drive_goto(izquierda - 25,izquierda - 24);
           }
           
         if (actual == 4){
