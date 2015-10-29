@@ -6,19 +6,23 @@
   http://learn.parallax.com/activitybot/build-and-test-ping-sensor-circuit
 */
 
-#include "simpletools.h"                      // Include simpletools header
+#include "simpletools.h"                      
 #include "ping.h"  
 #include "abdrive.h" 
-#include "abcalibrate.h"                         // Include ping header
+#include "abcalibrate.h"                        
 
+
+/* Se crea la estructura del Stack, donde solo es necesario el push y pop del mismo*/
 struct stack{
     int stk[1000];
     int top;
   };
 
+/*Se declara s como nuestro Stack*/
 typedef struct stack ST;
 ST s;
 
+/*Metodos para el stack*/
 void push(int);
 int pop(void);
 
@@ -29,11 +33,19 @@ int main()
 {
   s.top = 0;
   pause(500);
+  
+  /*Declaracion de Variables*/
+
+  /*Las siguientes 4 variables sirven para tomar las distancias*/
   int adelante;
   int derecha;
   int izquierda;
   int atras;
+  
+  /*Movimiento que se va a realizar*/
   int actual;
+  
+  /*Bandera para saber si se puede mover o no el robot*/
   int bandera;
   int mover;
   
@@ -49,14 +61,23 @@ int main()
     
     
     /*Se revisan todas las posibilidades*/
+    /*En caso de usar solo 1 sensor, se gira el robot para tomar distancias*/
+    /*De lo contrario, solo te toman en diferentes puertos*/
+
       adelante = ping_cm(8);
+      
       //girarD();
+      
       derecha = ping_cm(3);
-     // girarD();
+      
+      // girarD();
       //girarD();
+      
       izquierda = ping_cm(10);
+      
       //girarD();
-      /* Jerarquia: derecha, adelante, izquierda, atras */
+      
+      /* Jerarquia de movimiento: derecha, adelante, izquierda, atras */
       bandera = 0;
       
         if (izquierda>=15){
@@ -82,7 +103,11 @@ int main()
         derecha  = (derecha *10)/3.25;
         izquierda= (izquierda*10)/3.25;
         actual = pop();
-		
+        
+        
+        /*Se revisa el movimiento que se va a hacer */
+        
+        
         if (actual == 3){
             girarD();
             drive_goto(derecha - 25,derecha - 24);
@@ -100,10 +125,12 @@ int main()
             girarI();
             drive_goto(48,49);
           }
-    
         
    }        
 }
+
+
+/*Procedimientos para girar a la derecha o izquierda */
 
 void girarD(){
     drive_goto(26,-25);
@@ -114,6 +141,9 @@ void girarI(){
     drive_goto(-26,25);
     pause(500);
   }
+
+
+/*Metodos para llenar y vaciar el stack*/
 
 void push(int a){
     s.top = s.top+1;
