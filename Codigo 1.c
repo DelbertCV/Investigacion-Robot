@@ -18,7 +18,8 @@ struct stack{
     int top;
   };
 
-/*Se declara s como nuestro Stack*/
+
+/*Se declara s con las propiedades del Stack*/
 typedef struct stack ST;
 ST s;
 
